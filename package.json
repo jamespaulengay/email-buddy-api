@@ -4,7 +4,7 @@
   "description": "email buddy api",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js"
   },
