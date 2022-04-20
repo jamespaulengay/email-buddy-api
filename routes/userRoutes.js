@@ -1,8 +1,14 @@
 const express = require('express');
 const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
+const emailRouter = require('./../routes/emailRoutes');
 
 const router = express.Router();
+
+// GET /users/6wsdujk1231/emails
+
+// Use the emailRouter when you encounter this kind of route.
+router.use('/:userId/emails', emailRouter);
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);

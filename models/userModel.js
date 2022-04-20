@@ -4,9 +4,15 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
-    required: [true, 'Please tell us your name!']
+    trim: true,
+    required: [true, 'Please tell us your first name']
+  },
+  lastName: {
+    type: String,
+    trim: true,
+    required: [true, 'Please tell us your last name']
   },
   username: {
     type: String,
@@ -60,6 +66,13 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false
   }
+});
+
+//Virtual Populate
+userSchema.virtual('emails', {
+  ref: 'Email',
+  foreignField: 'user',
+  localField: '_id'
 });
 
 userSchema.pre('save', async function(next) {
@@ -119,7 +132,7 @@ userSchema.methods.createPasswordResetToken = function() {
     .update(resetToken)
     .digest('hex');
 
-  console.log({ resetToken }, this.passwordResetToken);
+  // console.log({ resetToken }, this.passwordResetToken);
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
